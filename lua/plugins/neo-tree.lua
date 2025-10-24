@@ -6,9 +6,19 @@ return {
 		"nvim-tree/nvim-web-devicons",
 		"MunifTanjim/nui.nvim",
 	},
-	lazy = false,
+	-- 优化：移除 lazy = false，改为按命令或快捷键加载
+	cmd = "Neotree",
+	keys = {
+		{
+			"<leader>e",
+			":Neotree toggle<CR>",
+			desc = "Neo-tree: Toggle file explorer",
+		},
+	},
 	config = function()
-		vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Neo-tree: Toggle file explorer" })
+		-- 优化：快捷键已移至顶层 `keys` 表，此处移除
+		-- vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Neo-tree: Toggle file explorer" })
+
 		require("neo-tree").setup({
 			close_if_last_window = false,
 			popup_border_style = "rounded",
@@ -166,6 +176,8 @@ return {
 			},
 		})
 
+		-- 您的自动命令（Autocmds）保持不变
+		-- 它们现在会在插件加载后（当您调用 Neotree 命令时）才被定义
 		vim.api.nvim_create_autocmd("VimEnter", {
 			pattern = "*",
 			callback = function()
