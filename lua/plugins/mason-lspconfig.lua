@@ -8,11 +8,8 @@ return {
 		{ "neovim/nvim-lspconfig", lazy = false },
 	},
 	config = function()
-		-- 1) Setup neodev for enhanced Lua support in Neovim
 		require("neodev").setup()
-		-- 2) Initialize Mason package manager
 		require("mason").setup()
-		-- 3) Configure Mason LSPConfig integration
 		require("mason-lspconfig").setup({
 			ensure_installed = { "lua_ls", "pyright" },
 			automatic_installation = true,
@@ -21,17 +18,33 @@ return {
 				function(server_name)
 					require("lspconfig")[server_name].setup({})
 				end,
-				-- Lua language server: rely on .luarc.json for settings
+
+				-- Lua language server: 集中配置
 				["lua_ls"] = function()
 					require("lspconfig").lua_ls.setup({
-						-- Use .luarc.json or .luarc.jsonc in project root for all settings
-						root_dir = require("lspconfig.util").root_pattern(
+						-- 1. 使用 nvim-lspconfig.lua 中的 root_markers 替换旧的 root_dir
+						root_markers = {
 							".luarc.json",
 							".luarc.jsonc",
+							".luacheckrc",
+							".stylua.toml",
+							"stylua.toml",
+							"selene.toml",
+							"selene.yml",
 							".git",
-							"lua",
-							"Makefile"
-						),
+						},
+						-- 2. 使用 nvim-lspconfig.lua 中的 settings
+						settings = {
+							Lua = {
+								runtime = { version = "LuaJIT" },
+								diagnostics = { globals = { "vim" } },
+								workspace = {
+									library = vim.api.nvim_get_runtime_file("", true),
+									checkThirdParty = false,
+								},
+								telemetry = { enable = false },
+							},
+						},
 					})
 				end,
 			},

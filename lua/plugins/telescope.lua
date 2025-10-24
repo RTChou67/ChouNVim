@@ -10,10 +10,6 @@ return {
 	},
 	config = function()
 		require("telescope").setup({
-			defaults = {
-				-- 设置默认搜索目录
-				cwd = "/home/rtchou",
-			},
 			extensions = {
 				fzf = {
 					fuzzy = false,
