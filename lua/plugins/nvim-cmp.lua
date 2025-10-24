@@ -27,12 +27,12 @@ return {
 				["<CR>"] = cmp.mapping(function(fallback)
 					if cmp.visible() then
 						if cmp.get_selected_entry() then
-							cmp.confirm({ select = false }) -- 确认当前项
+							cmp.confirm({ select = false })
 						else
-							cmp.abort() -- 退出补全，不换行
+							cmp.abort()
 						end
 					else
-						fallback() -- 补全没开，正常换行
+						fallback()
 					end
 				end, { "i", "s" }),
 				["<Tab>"] = cmp.mapping(function(fallback)
@@ -65,7 +65,6 @@ return {
 			},
 		})
 
-		-- 命令模式下 (冒号)
 		cmp.setup.cmdline(":", {
 			mapping = cmp.mapping.preset.cmdline({
 				["<Tab>"] = cmp.mapping.confirm({ select = true }),
@@ -79,7 +78,6 @@ return {
 			}),
 		})
 
-		-- 搜索模式 (/)
 		cmp.setup.cmdline("/", {
 			mapping = cmp.mapping.preset.cmdline(),
 			sources = {

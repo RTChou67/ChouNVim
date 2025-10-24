@@ -21,7 +21,6 @@ return {
 		})
 		pcall(require("telescope").load_extension, "fzf")
 
-		-- 可选：绑定快捷键以使用固定目录
 		local builtin = require("telescope.builtin")
 		vim.keymap.set("n", "<leader>ff", function()
 			builtin.find_files({

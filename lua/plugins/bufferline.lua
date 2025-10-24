@@ -6,8 +6,8 @@ return {
 		vim.opt.termguicolors = true
 		require("bufferline").setup({
 			options = {
-				mode = "buffers", -- 可改为 tabs
-				separator_style = "slant", -- 可选: "slant", "thick", "thin", {"", ""}
+				mode = "buffers",
+				separator_style = "slant",
 				diagnostics = "nvim_lsp",
 				show_close_icon = false,
 				always_show_bufferline = true,

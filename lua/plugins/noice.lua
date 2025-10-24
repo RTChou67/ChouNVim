@@ -3,7 +3,6 @@ return {
 	event = "VeryLazy",
 	dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
 	config = function()
-		-- 设置 notify 为默认通知
 		vim.notify = require("notify")
 		require("noice").setup({
 			lsp = {
@@ -20,11 +19,11 @@ return {
 				},
 			},
 			presets = {
-				bottom_search = true, -- 底部命令行风格
-				command_palette = true, -- 类 VSCode command palette
+				bottom_search = true,
+				command_palette = true,
 				long_message_to_split = true,
 				inc_rename = false,
-				lsp_doc_border = true, -- 文档边框
+				lsp_doc_border = true,
 			},
 			views = {
 				cmdline_popup = {
