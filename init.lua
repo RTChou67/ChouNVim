@@ -23,8 +23,8 @@ vim.keymap.set("n", "<Esc><Esc>", ":qa!<CR>", {
 	desc = "Force quit all",
 })
 
-vim.o.timeoutlen = 100
-vim.o.updatetime = 100
+vim.o.timeoutlen = 500
+vim.o.updatetime = 300
 
 vim.diagnostic.config({
 	virtual_text = true,
