@@ -8,9 +8,22 @@ return {
 			build = "make",
 		},
 	},
-	cmd = "Telescope", -- 添加 cmd 以防万一
-	-- <--- 核心修改：添加 keys 来触发加载
+	cmd = "Telescope",
 	keys = {
+		{
+			"<leader>fb",
+			function()
+				require("telescope.builtin").buffers()
+			end,
+			desc = "Find Buffers",
+		},
+		{
+			"<leader>fd",
+			function()
+				require("telescope.builtin").diagnostics()
+			end,
+			desc = "Find Diagnostics",
+		},
 		{
 			"<leader>ff",
 			function()
@@ -25,6 +38,20 @@ return {
 			end,
 			desc = "Live Grep in /home/rtchou",
 		},
+		{
+			"<leader>fh",
+			function()
+				require("telescope.builtin").help_tags()
+			end,
+			desc = "Find Help Tags",
+		},
+		{
+			"<leader>fk",
+			function()
+				require("telescope.builtin").keymaps()
+			end,
+			desc = "Find Keymaps",
+		},
 	},
 	config = function()
 		require("telescope").setup({
@@ -38,7 +65,8 @@ return {
 			},
 		})
 		pcall(require("telescope").load_extension, "fzf")
-		
+
 		-- 移除这里的 local builtin = ... 和 vim.keymap.set ...
 	end,
 }
+
