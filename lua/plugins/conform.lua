@@ -7,6 +7,7 @@ return {
 			cpp = { "clang-format" },
 			sh = { "shfmt" },
 			zsh = { "shfmt" },
+			tex = { "latexindent" },
 		},
 		format_on_save = {
 			timeout_ms = 500,

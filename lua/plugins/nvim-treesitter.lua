@@ -26,6 +26,7 @@ return {
 			"json",
 			"jsonc",
 			"julia",
+			"latex",
 			"lua",
 			"luadoc",
 			"luap",
