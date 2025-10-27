@@ -8,12 +8,11 @@ return {
 		{ "hrsh7th/cmp-nvim-lsp" },
 	},
 	config = function()
+		-- 1. 加载依赖
 		require("neodev").setup()
-		require("mason").setup()
-
+		local lspconfig = require("lspconfig") -- 现在加载是安全的
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-
 		local signs = { Error = "", Warn = "", Hint = "", Info = "" }
 		for type, icon in pairs(signs) do
 			local hl = "DiagnosticSign" .. type
@@ -21,15 +20,20 @@ return {
 		end
 
 		require("mason-lspconfig").setup({
-			ensure_installed = { "lua_ls", "pyright" },
+			ensure_installed = {
+				"lua_ls",
+				"pyright",
+				"texlab",
+			},
 			automatic_installation = true,
+
 			handlers = {
+
 				function(server_name)
-					require("lspconfig")[server_name].setup({
+					lspconfig[server_name].setup({
 						capabilities = capabilities,
 					})
 				end,
-
 				["lua_ls"] = function()
 					require("lspconfig").lua_ls.setup({
 						capabilities = capabilities,
