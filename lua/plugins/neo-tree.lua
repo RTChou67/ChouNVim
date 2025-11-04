@@ -51,17 +51,17 @@ return {
 					use_git_status_colors = true,
 					highlight = "NeoTreeFileName",
 				},
-				git_status = {
+				gitStatus = {
 					symbols = {
-						added = "A",
-						deleted = "D",
-						modified = "M",
-						renamed = "R",
-						untracked = "U",
-						ignored = "I",
-						unstaged = "",
-						staged = "S",
-						conflict = "C",
+						added = " ",
+						conflict = "󰩌 ",
+						deleted = "󱂥",
+						ignored = " ",
+						modified = " ",
+						renamed = "󰑕",
+						staged = "󰩍",
+						unstaged = "",
+						untracked = " ",
 					},
 				},
 			},
@@ -195,4 +195,3 @@ return {
 		})
 	end,
 }
-
