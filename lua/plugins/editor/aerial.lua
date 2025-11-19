@@ -21,8 +21,9 @@ return {
             "Field",
             "Property",
         },
-        on_attach = function(_)
-            vim.cmd("AerialOpen")
+        on_attach = function(bufnr)
+            vim.keymap.set("n", "<leader>o", "<cmd>AerialToggle<CR>",
+                { buffer = bufnr, desc = "Toggle Aerial" })
         end,
     },
     dependencies = {
