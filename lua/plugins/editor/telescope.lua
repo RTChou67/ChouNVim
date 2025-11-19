@@ -65,8 +65,5 @@ return {
 			},
 		})
 		pcall(require("telescope").load_extension, "fzf")
-
-		-- 移除这里的 local builtin = ... 和 vim.keymap.set ...
 	end,
 }
-
