@@ -3,7 +3,6 @@ vim.g.maplocalleader = "\\"
 vim.g.python3_host_prog = vim.fn.exepath("python")
 local opt = vim.opt
 opt.number = true
-opt.relativenumber = true
 opt.signcolumn = "yes"
 
 opt.tabstop = 4

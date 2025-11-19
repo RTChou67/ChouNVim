@@ -18,20 +18,9 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {
-        -- ========================================
-        -- 核心依赖（必须最先加载）
-        -- ========================================
         { import = "plugins.core" },
-
-        -- ========================================
-        -- 重要的单文件插件
-        -- ========================================
         { import = "plugins.treesitter" },
         { import = "plugins.formatting" },
-
-        -- ========================================
-        -- 分类插件目录
-        -- ========================================
         { import = "plugins.coding" },
         { import = "plugins.editor" },
         { import = "plugins.lsp" },
@@ -39,30 +28,22 @@ require("lazy").setup({
         { import = "plugins.git" },
         { import = "plugins.extras" },
     },
-
-    -- ========================================
-    -- Lazy.nvim 配置
-    -- ========================================
     defaults = {
         lazy = false,    -- 默认不懒加载（除非插件自己指定）
         version = false, -- 使用 git HEAD 而不是版本号
     },
-
     install = {
         colorscheme = { "tokyonight", "habamax" },
     },
-
     checker = {
         enabled = true,   -- 自动检查插件更新
         notify = false,   -- 不要每次都通知
         frequency = 3600, -- 检查频率（秒）
     },
-
     change_detection = {
         enabled = true,
         notify = false,
     },
-
     ui = {
         border = "rounded",
         icons = {
@@ -81,7 +62,6 @@ require("lazy").setup({
             lazy = "💤 ",
         },
     },
-
     performance = {
         cache = {
             enabled = true,
