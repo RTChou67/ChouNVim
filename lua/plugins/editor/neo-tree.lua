@@ -171,26 +171,5 @@ return {
                 },
             },
         })
-
-        -- 您的自动命令（Autocmds）保持不变
-        -- 它们现在会在插件加载后（当您调用 Neotree 命令时）才被定义
-        vim.api.nvim_create_autocmd("VimEnter", {
-            pattern = "*",
-            callback = function()
-                if vim.fn.argc() == 0 and not vim.g.started_by_firenvim then
-                    vim.cmd("Neotree")
-                end
-            end,
-        })
-
-        vim.api.nvim_create_autocmd("WinEnter", {
-            pattern = "*",
-            callback = function()
-                local last_winnr = vim.fn.winnr("$")
-                if last_winnr == 1 and vim.fn.bufname("%") == "" and vim.bo.buftype == "" then
-                    vim.cmd("Neotree")
-                end
-            end,
-        })
     end,
 }
