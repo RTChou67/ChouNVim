@@ -7,6 +7,7 @@ return {
 			"nvim-telescope/telescope-fzf-native.nvim",
 			build = "make",
 		},
+		"nvim-telescope/telescope-ui-select.nvim",
 	},
 	cmd = "Telescope",
 	keys = {
@@ -27,14 +28,14 @@ return {
 		{
 			"<leader>ff",
 			function()
-				require("telescope.builtin").find_files({ cwd = "/home/rtchou" })
+				require("telescope.builtin").find_files()
 			end,
 			desc = "Find Files in /home/rtchou",
 		},
 		{
 			"<leader>fg",
 			function()
-				require("telescope.builtin").live_grep({ cwd = "/home/rtchou" })
+				require("telescope.builtin").live_grep()
 			end,
 			desc = "Live Grep in /home/rtchou",
 		},
@@ -62,8 +63,12 @@ return {
 					override_file_sorter = true,
 					case_mode = "smart_case",
 				},
+				["ui-select"] = {
+					require("telescope.themes").get_dropdown({}),
+				},
 			},
 		})
 		pcall(require("telescope").load_extension, "fzf")
+		pcall(require("telescope").load_extension, "ui-select")
 	end,
 }
