@@ -6,6 +6,7 @@ return {
 		lint.linters_by_ft = {
 			python = { "pylint" },
 			sh = { "shellcheck" },
+			yaml = { "yamllint" }
 		}
 
 		-- 自动触发 Linting

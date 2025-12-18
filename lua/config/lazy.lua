@@ -6,7 +6,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out, "WarningMsg" },
+			{ out,                            "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -30,7 +30,7 @@ require("lazy").setup({
 		{ import = "plugins.linting" },
 	},
 	defaults = {
-		lazy = false, -- 默认不懒加载（除非插件自己指定）
+		lazy = true,
 		version = false, -- 使用 git HEAD 而不是版本号
 	},
 	install = {

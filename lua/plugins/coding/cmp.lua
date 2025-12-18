@@ -64,16 +64,29 @@ return {
         })
 
         cmp.setup.cmdline(":", {
+            completion = {
+                autocomplete = { "TextChanged" },
+            },
             mapping = cmp.mapping.preset.cmdline({
-                ["<Tab>"] = cmp.mapping.confirm({ select = true }),
+                ["<Tab>"] = {
+                    c = function()
+                        if cmp.visible() then
+                            cmp.select_next_item()
+                        else
+                            cmp.complete()
+                        end
+                    end,
+                },
                 ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
                 ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+                ["<C-e>"] = cmp.mapping.abort(),
             }),
             sources = cmp.config.sources({
                 { name = "path" },
             }, {
-                { name = "cmdline" },
+                { name = "cmdline", option = { ignore_cmds = { 'Man', '!' } } },
             }),
+            matching = { disallow_symbol_nonprefix_matching = false },
         })
 
         cmp.setup.cmdline("/", {

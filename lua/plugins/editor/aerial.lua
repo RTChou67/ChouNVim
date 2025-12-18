@@ -1,12 +1,16 @@
 return {
     "stevearc/aerial.nvim",
+    -- 1. 核心改进：添加 keys 属性来触发加载
+    keys = {
+        { "<leader>o", "<cmd>AerialToggle<CR>", desc = "Toggle Outline" },
+    },
+    -- 2. 使用 opts 直接定义配置
     opts = {
         layout = {
             default_direction = "right",
             width = 30,
         },
         default_mode = "vsplit",
-        -- 添加这个配置来控制显示的详细程度
         filter_kind = {
             "Class",
             "Constructor",
@@ -21,17 +25,16 @@ return {
             "Field",
             "Property",
         },
+        -- on_attach 里的快捷键是在 Aerial 窗口内使用的
         on_attach = function(bufnr)
-            vim.keymap.set("n", "<leader>o", "<cmd>AerialToggle<CR>",
-                { buffer = bufnr, desc = "Toggle Aerial" })
+            vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr, desc = "Prev Symbol" })
+            vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr, desc = "Next Symbol" })
         end,
     },
     dependencies = {
         "neovim/nvim-lspconfig",
         "nvim-treesitter/nvim-treesitter",
     },
-    config = function(_, opts)
-        require("aerial").setup(opts)
-        vim.keymap.set("n", "<leader>o", "<cmd>AerialToggle<CR>", { desc = "Toggle Outline" })
-    end,
+    -- 3. 简化 config：如果你只用了 opts，通常不需要再写 config 函数
+    -- lazy.nvim 会自动帮你执行 require("aerial").setup(opts)
 }

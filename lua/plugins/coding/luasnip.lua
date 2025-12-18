@@ -1,5 +1,4 @@
 return {
-	-- LuaSnip: 代码片段引擎
 	{
 		"L3MON4D3/LuaSnip",
 		version = "v2.*",

@@ -2,9 +2,9 @@ return {
 	"nvzone/showkeys",
 	event = "VeryLazy",
 	opts = {
-		timeout = 3,
+		timeout = 1,
 		maxkeys = 5,
-		position = "top-right",
+		position = "bottom-left",
 	},
 	config = function(_, opts)
 		local showkeys = require("showkeys")
