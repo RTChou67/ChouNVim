@@ -1,5 +1,6 @@
 return {
     "hrsh7th/nvim-cmp",
+    event = { "InsertEnter", "CmdlineEnter" }, -- 精确的懒加载时机
     dependencies = {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
@@ -13,8 +14,14 @@ return {
         local cmp = require("cmp")
         local luasnip = require("luasnip")
         local lspkind = require("lspkind")
+
         require("luasnip.loaders.from_vscode").lazy_load()
+
         cmp.setup({
+            window = {
+                completion = cmp.config.window.bordered(),
+                documentation = cmp.config.window.bordered(),
+            },
             snippet = {
                 expand = function(args)
                     luasnip.lsp_expand(args.body)
@@ -22,17 +29,7 @@ return {
             },
             mapping = cmp.mapping.preset.insert({
                 ["<C-Space>"] = cmp.mapping.complete(),
-                ["<CR>"] = cmp.mapping(function(fallback)
-                    if cmp.visible() then
-                        if cmp.get_selected_entry() then
-                            cmp.confirm({ select = false })
-                        else
-                            cmp.abort()
-                        end
-                    else
-                        fallback()
-                    end
-                end, { "i", "s" }),
+                ["<CR>"] = cmp.mapping.confirm({ select = false }), -- 简化：只确认已选择的
                 ["<Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
@@ -53,47 +50,38 @@ return {
                 end, { "i", "s" }),
             }),
             sources = cmp.config.sources({
-                { name = "nvim_lsp" },
-                { name = "luasnip" },
-                { name = "buffer" },
-                { name = "path" },
+                { name = "nvim_lsp", priority = 1000 },
+                { name = "luasnip",  priority = 750 },
+                { name = "buffer",   priority = 500, keyword_length = 3 }, -- 3个字符以上才提示 buffer 内容
+                { name = "path",     priority = 250 },
             }),
             formatting = {
-                format = lspkind.cmp_format({ mode = "symbol_text", maxwidth = 50 }),
+                format = lspkind.cmp_format({
+                    mode = "symbol_text",
+                    maxwidth = 50,
+                    ellipsis_char = '...',
+                }),
             },
         })
-
         cmp.setup.cmdline(":", {
-            completion = {
-                autocomplete = { "TextChanged" },
-            },
+            completion = { autocomplete = { "TextChanged" } },
             mapping = cmp.mapping.preset.cmdline({
                 ["<Tab>"] = {
                     c = function()
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        else
-                            cmp.complete()
-                        end
+                        if cmp.visible() then cmp.select_next_item() else cmp.complete() end
                     end,
                 },
-                ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-                ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-                ["<C-e>"] = cmp.mapping.abort(),
             }),
             sources = cmp.config.sources({
-                { name = "path" },
+                { name = "path" }
             }, {
-                { name = "cmdline", option = { ignore_cmds = { 'Man', '!' } } },
+                { name = "cmdline", option = { ignore_cmds = { 'Man', '!' } } }
             }),
             matching = { disallow_symbol_nonprefix_matching = false },
         })
-
-        cmp.setup.cmdline("/", {
+        cmp.setup.cmdline({ "/", "?" }, {
             mapping = cmp.mapping.preset.cmdline(),
-            sources = {
-                { name = "buffer" },
-            },
+            sources = { { name = "buffer" } }
         })
     end,
 }

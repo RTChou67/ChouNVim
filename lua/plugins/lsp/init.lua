@@ -1,4 +1,5 @@
 return {
+	-- 1. Mason: 管理 Formatter, Linter 等非 LSP 工具
 	{
 		"williamboman/mason.nvim",
 		cmd = "Mason",
@@ -17,25 +18,14 @@ return {
 			require("mason").setup(opts)
 			local mr = require("mason-registry")
 			local ensure_installed = {
-				-- Formatters
-				"stylua", -- Lua
-				"black", -- Python
-				"isort", -- Python imports
-				"clang-format", -- C/C++
-				"shfmt", -- Shell
-
-				-- 可选：Linters
-				"pylint", -- Python
-				"shellcheck", -- Shell
+				"stylua",
+				"black",
+				"isort",
+				"clang-format",
+				"shfmt",
+				"pylint",
+				"shellcheck",
 			}
-			mr:on("package:install:success", function()
-				vim.defer_fn(function()
-					require("lazy.core.handler.event").trigger({
-						event = "FileType",
-						buf = vim.api.nvim_get_current_buf(),
-					})
-				end, 100)
-			end)
 
 			local function ensure_tools()
 				for _, tool in ipairs(ensure_installed) do
@@ -53,12 +43,11 @@ return {
 			end
 		end,
 	},
-
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
-			"mason.nvim",
+			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			"hrsh7th/cmp-nvim-lsp",
 		},
@@ -72,118 +61,81 @@ return {
 					prefix = "●",
 				},
 				severity_sort = true,
+				-- 在 0.10+ 中，直接在这里定义图标即可，不再需要 sign_define 循环
 				signs = {
 					text = {
-						[vim.diagnostic.severity.ERROR] = "",
-						[vim.diagnostic.severity.WARN] = "",
+						[vim.diagnostic.severity.ERROR] = "✘",
+						[vim.diagnostic.severity.WARN] = "▲",
 						[vim.diagnostic.severity.HINT] = "󰌵",
-						[vim.diagnostic.severity.INFO] = "",
+						[vim.diagnostic.severity.INFO] = "ℹ",
 					},
 				},
 				float = {
 					border = "rounded",
-					source = "always",
+					source = true, -- 修复警告：用 true 替代 "always"
 				},
 			})
 
-			-- 设置诊断符号
-			local signs = {
-				Error = "",
-				Warn = "",
-				Hint = "󰌵",
-				Info = "",
-			}
-			for type, icon in pairs(signs) do
-				local hl = "DiagnosticSign" .. type
-				vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-			end
-
+			-- B. 准备 Capabilities (配合补全)
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-
 			capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-			local lspconfig = require("lspconfig")
-
-			require("mason-lspconfig").setup({
-
-				ensure_installed = {
-					"lua_ls", -- Lua
-					"pyright", -- Python
-					"texlab", -- LaTeX
+			-- C. 定义服务器配置字典 (数据驱动，逻辑更清晰)
+			local servers = {
+				lua_ls = {
+					settings = {
+						Lua = {
+							runtime = { version = "LuaJIT" },
+							diagnostics = { globals = { "vim" } },
+							workspace = {
+								library = vim.api.nvim_get_runtime_file("", true),
+								checkThirdParty = false,
+							},
+							telemetry = { enable = false },
+							completion = { callSnippet = "Replace" },
+							hint = {
+								enable = true,
+								paramType = true,
+								setType = false,
+								paramName = "Disable",
+								semicolon = "Disable",
+								arrayIndex = "Disable",
+							},
+						},
+					},
 				},
+				pyright = {
+					settings = {
+						python = {
+							analysis = {
+								typeCheckingMode = "basic",
+								autoSearchPaths = true,
+								useLibraryCodeForTypes = true,
+								diagnosticMode = "workspace",
+							},
+						},
+					},
+				},
+				texlab = {
+					settings = {
+						texlab = {
+							build = { onSave = true },
+						},
+					},
+				},
+			}
+
+			local lspconfig = require("lspconfig")
+			require("mason-lspconfig").setup({
+				ensure_installed = vim.tbl_keys(servers),
 				automatic_installation = true,
-
 				handlers = {
-
+					-- 默认 handler
 					function(server_name)
-						lspconfig[server_name].setup({
-							capabilities = capabilities,
-						})
-					end,
-
-					["lua_ls"] = function()
-						lspconfig.lua_ls.setup({
-							capabilities = capabilities,
-							settings = {
-								Lua = {
-									runtime = {
-										version = "LuaJIT",
-									},
-									diagnostics = {
-										globals = { "vim" }, -- 识别 vim 全局变量
-									},
-									workspace = {
-										-- Neovim runtime files
-										library = vim.api.nvim_get_runtime_file("", true),
-										checkThirdParty = false, -- 不提示第三方库
-									},
-									telemetry = {
-										enable = false, -- 禁用遥测
-									},
-									completion = {
-										callSnippet = "Replace", -- 补全时替换整个函数调用
-									},
-									hint = {
-										enable = true, -- 启用 inlay hints
-										setType = false,
-										paramType = true,
-										paramName = "Disable",
-										semicolon = "Disable",
-										arrayIndex = "Disable",
-									},
-								},
-							},
-						})
-					end,
-
-					["pyright"] = function()
-						lspconfig.pyright.setup({
-							capabilities = capabilities,
-							settings = {
-								python = {
-									analysis = {
-										typeCheckingMode = "basic", -- off, basic, strict
-										autoSearchPaths = true,
-										useLibraryCodeForTypes = true,
-										diagnosticMode = "workspace",
-									},
-								},
-							},
-						})
-					end,
-
-					["texlab"] = function()
-						lspconfig.texlab.setup({
-							capabilities = capabilities,
-							settings = {
-								texlab = {
-									build = {
-										onSave = true,
-									},
-								},
-							},
-						})
+						local opts = servers[server_name] or {}
+						opts.capabilities = capabilities
+						lspconfig[server_name].setup(opts)
 					end,
 				},
 			})
