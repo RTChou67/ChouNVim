@@ -4,7 +4,7 @@ return {
 	config = function()
 		local lint = require("lint")
 		lint.linters_by_ft = {
-			python = { "pylint" },
+			-- python = { "pylint" }, -- 禁用 pylint，因为 pyright (LSP) 已经提供了诊断，避免重复
 			sh = { "shellcheck" },
 			yaml = { "yamllint" }
 		}
