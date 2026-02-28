@@ -15,6 +15,7 @@ opt.breakindent = true
 opt.termguicolors = true
 opt.cursorline = true -- 高亮当前行
 opt.mouse = "a"       -- 启用鼠标
+opt.mousemodel = "popup_setpos" -- 右键菜单行为
 opt.wrap = false      -- 不自动换行
 opt.scrolloff = 8     -- 滚动时保持 8 行边距
 opt.sidescrolloff = 8
