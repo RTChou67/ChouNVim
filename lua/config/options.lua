@@ -1,6 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
-vim.g.python3_host_prog = vim.fn.exepath("python")
+vim.g.python3_host_prog = vim.fn.exepath("python3") ~= "" and vim.fn.exepath("python3") or vim.fn.exepath("python")
 local opt = vim.opt
 opt.number = true
 opt.signcolumn = "yes"
