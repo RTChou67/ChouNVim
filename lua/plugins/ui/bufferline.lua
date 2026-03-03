@@ -19,7 +19,4 @@ return {
 			},
 		},
 	},
-	init = function()
-		vim.opt.termguicolors = true
-	end,
 }
