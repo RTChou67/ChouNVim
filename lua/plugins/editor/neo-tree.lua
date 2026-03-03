@@ -6,7 +6,6 @@ return {
 		"nvim-tree/nvim-web-devicons",
 		"MunifTanjim/nui.nvim",
 	},
-	lazy = false,
 	keys = {
 		{
 			"<leader>e",
@@ -132,7 +131,7 @@ return {
 				},
 				group_empty_dirs = false,
 				hijack_netrw_behavior = "open_current",
-				use_libuv_file_watcher = false,
+				use_libuv_file_watcher = true,
 				window = {
 					mappings = {
 						["/"] = "fuzzy_finder",
