@@ -31,7 +31,7 @@ require("lazy").setup({
 	},
 	defaults = {
 		lazy = true,
-		version = false, -- 使用 git HEAD 而不是版本号
+		version = nil, -- 优先使用 semver 版本，没有则使用 latest
 	},
 	install = {
 		colorscheme = { "tokyonight", "habamax" },
