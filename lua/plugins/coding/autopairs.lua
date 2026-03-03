@@ -13,7 +13,7 @@ return {
 		fast_wrap = {
 			map = "<M-e>",
 			chars = { "{", "[", "(", '"', "'" },
-			pattern = [=[[%'%"%)%>%]%]%}%, stream]=],
+			pattern = [=[[%'%"%)%>%]%]%}%,]]=],
 			end_key = "$",
 			keys = "qwertyuiopzxcvbnmasdfghjkl",
 			check_comma = true,
