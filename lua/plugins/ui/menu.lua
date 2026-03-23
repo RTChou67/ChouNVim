@@ -5,7 +5,7 @@ return {
 	},
 	{
 		"nvzone/menu",
-		lazy = true,
+		lazy = false,
 		config = function()
 			vim.keymap.set("n", "<RightMouse>", function()
 				vim.cmd.exec('"normal! \\<RightMouse>"')
