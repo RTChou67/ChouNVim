@@ -80,6 +80,30 @@ return {
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 			capabilities.textDocument.completion.completionItem.snippetSupport = true
+			local lspconfig = require("lspconfig")
+			local lsp_keymaps = vim.api.nvim_create_augroup("user-lsp-keymaps", { clear = true })
+
+			vim.api.nvim_create_autocmd("LspAttach", {
+				group = lsp_keymaps,
+				callback = function(args)
+					local bufnr = args.buf
+					local map = function(lhs, rhs, desc)
+						vim.keymap.set("n", lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
+					end
+
+					map("gd", vim.lsp.buf.definition, "Goto Definition")
+					map("gD", vim.lsp.buf.declaration, "Goto Declaration")
+					map("gr", vim.lsp.buf.references, "Goto References")
+					map("gi", vim.lsp.buf.implementation, "Goto Implementation")
+					map("K", vim.lsp.buf.hover, "Hover Documentation")
+					map("<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
+					map("<leader>ca", vim.lsp.buf.code_action, "Code Action")
+					map("<leader>lf", function()
+						require("conform").format({ bufnr = bufnr, lsp_fallback = true })
+					end, "Format Buffer")
+					map("<leader>lr", "<cmd>LspRestart<cr>", "Restart LSP")
+				end,
+			})
 
 			-- C. 定义服务器配置字典 (数据驱动，逻辑更清晰)
 			local servers = {
@@ -129,10 +153,9 @@ return {
 				},
 			}
 
-			local lspconfig = require("lspconfig")
 			require("mason-lspconfig").setup({
 				ensure_installed = vim.tbl_keys(servers),
-				automatic_installation = true,
+				automatic_enable = false,
 				handlers = {
 					-- 默认 handler
 					function(server_name)
