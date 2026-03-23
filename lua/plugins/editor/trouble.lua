@@ -4,8 +4,8 @@ return {
 	cmd = { "Trouble" },
 	keys = {
 		{ "<leader>xx", "<cmd>Trouble toggle<cr>", desc = "Toggle Trouble" },
-		{ "<leader>xw", "<cmd>Trouble toggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics" },
-		{ "<leader>xd", "<cmd>Trouble toggle document_diagnostics<cr>", desc = "Document Diagnostics" },
+		{ "<leader>xw", "<cmd>Trouble diagnostics toggle<cr>", desc = "Workspace Diagnostics" },
+		{ "<leader>xd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Document Diagnostics" },
 	},
 	opts = {
 		-- 您的配置
