@@ -20,7 +20,6 @@ return {
 			popup_border_style = "rounded",
 			enable_git_status = true,
 			enable_diagnostics = true,
-			close_on_open = false,
 			open_files_do_not_replace_types = { "terminal", "trouble", "qf" },
 			default_component_configs = {
 				container = {
@@ -52,7 +51,7 @@ return {
 					use_git_status_colors = true,
 					highlight = "NeoTreeFileName",
 				},
-				gitStatus = {
+				git_status = {
 					symbols = {
 						added = " ",
 						conflict = "󰩌 ",
