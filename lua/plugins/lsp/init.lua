@@ -24,6 +24,7 @@ return {
 				"clang-format",
 				"shfmt",
 				"pylint",
+				"rustfmt",
 				"shellcheck",
 			}
 
@@ -145,6 +146,21 @@ return {
 								autoSearchPaths = true,
 								useLibraryCodeForTypes = true,
 								diagnosticMode = "workspace",
+							},
+						},
+					},
+				},
+				rust_analyzer = {
+					settings = {
+						["rust-analyzer"] = {
+							cargo = {
+								allFeatures = true,
+							},
+							checkOnSave = {
+								command = "clippy",
+							},
+							procMacro = {
+								enable = true,
 							},
 						},
 					},

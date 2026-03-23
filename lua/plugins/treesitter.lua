@@ -25,6 +25,7 @@ return {
             "python",
             "query",
             "regex",
+            "rust",
             "toml",
             "tsx",
             "typescript",

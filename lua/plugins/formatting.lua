@@ -7,6 +7,7 @@ return {
             lua = { "stylua" },
             cpp = { "clang-format" },
             bash = { "shfmt" },
+            rust = { "rustfmt" },
             sh = { "shfmt" },
             zsh = { "shfmt" },
             tex = { "latexindent" },
