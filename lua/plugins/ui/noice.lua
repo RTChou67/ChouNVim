@@ -58,6 +58,5 @@ return {
 			},
 
 		},
-		redirect = { { filter = { event = "notify" }, view = "snack_notify" } },
 	}
 }
