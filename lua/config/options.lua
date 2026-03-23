@@ -51,6 +51,11 @@ opt.pumheight = 10 -- 补全菜单高度
 
 
 opt.conceallevel = 0
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+opt.foldenable = true
+opt.foldlevel = 99
+opt.foldlevelstart = 99
 opt.fileencoding = "utf-8"
 opt.showmode = false
 opt.showcmd = true
