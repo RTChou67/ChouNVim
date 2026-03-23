@@ -5,15 +5,20 @@ return {
 		local lint = require("lint")
 		lint.linters_by_ft = {
 			-- python = { "pylint" }, -- 禁用 pylint，因为 pyright (LSP) 已经提供了诊断，避免重复
+			bash = { "shellcheck" },
 			sh = { "shellcheck" },
-			yaml = { "yamllint" }
+			zsh = { "shellcheck" },
+			yaml = { "yamllint" },
 		}
 
 		-- 自动触发 Linting
-		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+		local lint_augroup = vim.api.nvim_create_augroup("user-lint", { clear = true })
 		vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
 			group = lint_augroup,
-			callback = function()
+			callback = function(args)
+				if vim.bo[args.buf].buftype ~= "" then
+					return
+				end
 				lint.try_lint()
 			end,
 		})

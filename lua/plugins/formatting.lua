@@ -6,6 +6,7 @@ return {
             python = { "black" },
             lua = { "stylua" },
             cpp = { "clang-format" },
+            bash = { "shfmt" },
             sh = { "shfmt" },
             zsh = { "shfmt" },
             tex = { "latexindent" },
