@@ -8,7 +8,9 @@ return {
         ensure_installed = {
             "bash",
             "c",
+            "cpp",
             "diff",
+            "fortran",
             "html",
             "javascript",
             "jsdoc",

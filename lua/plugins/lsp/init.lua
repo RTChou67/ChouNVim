@@ -20,12 +20,14 @@ return {
 			local ensure_installed = {
 				"stylua",
 				"black",
+				"fprettify",
 				"isort",
 				"clang-format",
 				"shfmt",
 				"pylint",
 				"rustfmt",
 				"shellcheck",
+				"yamlfmt",
 			}
 
 			local function ensure_tools()
@@ -165,6 +167,15 @@ return {
 						},
 					},
 				},
+				yamlls = {
+					settings = {
+						yaml = {
+							keyOrdering = false,
+						},
+					},
+				},
+				taplo = {},
+				fortls = {},
 				clangd = {},
 				texlab = {
 					settings = {

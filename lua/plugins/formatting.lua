@@ -3,12 +3,15 @@ return {
     opts = {
         formatters_by_ft = {
             c = { "clang-format" },
-            python = { "black" },
+            python = { "isort", "black" },
             lua = { "stylua" },
             cpp = { "clang-format" },
             bash = { "shfmt" },
+            fortran = { "fprettify" },
             rust = { "rustfmt" },
             sh = { "shfmt" },
+            toml = { "taplo" },
+            yaml = { "yamlfmt" },
             zsh = { "shfmt" },
             tex = { "latexindent" },
         },
