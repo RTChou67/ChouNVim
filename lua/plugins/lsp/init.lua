@@ -87,6 +87,7 @@ return {
 				group = lsp_keymaps,
 				callback = function(args)
 					local bufnr = args.buf
+					local client = vim.lsp.get_client_by_id(args.data.client_id)
 					local map = function(lhs, rhs, desc)
 						vim.keymap.set("n", lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
 					end
@@ -102,6 +103,10 @@ return {
 						require("conform").format({ bufnr = bufnr, lsp_fallback = true })
 					end, "Format Buffer")
 					map("<leader>lr", "<cmd>LspRestart<cr>", "Restart LSP")
+
+					if client and client.name == "clangd" then
+						map("<leader>ch", "<cmd>LspClangdSwitchSourceHeader<cr>", "Switch Source/Header")
+					end
 				end,
 			})
 
@@ -144,6 +149,7 @@ return {
 						},
 					},
 				},
+				clangd = {},
 				texlab = {
 					settings = {
 						texlab = {
