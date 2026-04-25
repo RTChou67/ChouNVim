@@ -14,7 +14,7 @@ return {
 				local options = "default"
 
 				if ft == "neo-tree" then
-					options = "nvimtree"
+					options = "neo-tree"
 				elseif ft == "markdown" or ft == "rmd" or ft == "org" then
 					options = "markdown"
 				end

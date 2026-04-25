@@ -5,17 +5,14 @@ M.menu = {
 		{
 			name = "  Cut",
 			cmd = '"+x',
-			rtxt = "",
 		},
 		{
 			name = "  Copy",
 			cmd = '"+y',
-			rtxt = "",
 		},
 		{
 			name = "  Paste",
 			cmd = '"+p',
-			rtxt = "",
 		},
 		{ name = "separator" },
 		{
@@ -48,7 +45,6 @@ M.menu = {
 		{
 			name = "  Format",
 			cmd = "lua require('conform').format({ lsp_fallback = true })",
-			rtxt = "",
 		},
 		{ name = "separator" },
 		{
@@ -67,7 +63,6 @@ M.menu = {
 		{
 			name = "  Open",
 			cmd = "lua require('neo-tree.sources.filesystem.commands').open(require('neo-tree.sources.manager').get_state('filesystem'))",
-			rtxt = "",
 		},
 		{
 			name = "  New File",
@@ -118,34 +113,29 @@ M.menu = {
 		{
 			name = "  Cut",
 			cmd = '"+x',
-			rtxt = "",
 		},
 		{
 			name = "  Copy",
 			cmd = '"+y',
-			rtxt = "",
 		},
 		{
 			name = "  Paste",
 			cmd = '"+p',
-			rtxt = "",
 		},
 		{ name = "separator" },
 		{
 			name = "  Preview (Split)",
 			cmd = "lua require('render-markdown').enable(); require('render-markdown').preview()",
-			rtxt = "",
 		},
 		{
 			name = "  Preview (Browser)",
-			cmd = "LivePreview",
+			cmd = "LivePreview start",
 			rtxt = "<leader>mb",
 		},
 		{ name = "separator" },
 		{
 			name = "  Format",
 			cmd = "lua require('conform').format({ lsp_fallback = true })",
-			rtxt = "",
 		},
 		{ name = "separator" },
 		{
