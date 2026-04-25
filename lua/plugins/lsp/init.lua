@@ -14,44 +14,21 @@ return {
 				},
 			},
 		},
-		config = function(_, opts)
-			require("mason").setup(opts)
-			local mr = require("mason-registry")
-			local ensure_installed = {
-				"stylua",
-				"black",
-				"fprettify",
-				"isort",
-				"clang-format",
-				"shfmt",
-				"pylint",
-				"rustfmt",
-				"shellcheck",
-				"yamlfmt",
-			}
-
-			local function ensure_tools()
-				for _, tool in ipairs(ensure_installed) do
-					local p = mr.get_package(tool)
-					if not p:is_installed() then
-						p:install()
-					end
-				end
-			end
-
-			if mr.refresh then
-				mr.refresh(ensure_tools)
-			else
-				ensure_tools()
-			end
-		end,
+	},
+	{
+		"williamboman/mason-lspconfig.nvim",
+		cmd = { "LspInstall", "LspUninstall" },
+		dependencies = { "williamboman/mason.nvim" },
+		opts = {
+			ensure_installed = {},
+			automatic_enable = false,
+		},
 	},
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
 			"hrsh7th/cmp-nvim-lsp",
 		},
 		config = function()
@@ -191,10 +168,7 @@ return {
 				vim.lsp.config(server_name, server_opts)
 			end
 
-			require("mason-lspconfig").setup({
-				ensure_installed = vim.tbl_keys(servers),
-				automatic_enable = vim.tbl_keys(servers),
-			})
+			vim.lsp.enable(vim.tbl_keys(servers))
 		end,
 	},
 }
