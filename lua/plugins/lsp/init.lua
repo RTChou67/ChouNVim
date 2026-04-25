@@ -83,7 +83,6 @@ return {
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 			capabilities.textDocument.completion.completionItem.snippetSupport = true
-			local lspconfig = require("lspconfig")
 			local lsp_keymaps = vim.api.nvim_create_augroup("user-lsp-keymaps", { clear = true })
 
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -186,17 +185,15 @@ return {
 				},
 			}
 
+			for server_name, server_opts in pairs(servers) do
+				server_opts.capabilities =
+					vim.tbl_deep_extend("force", {}, capabilities, server_opts.capabilities or {})
+				vim.lsp.config(server_name, server_opts)
+			end
+
 			require("mason-lspconfig").setup({
 				ensure_installed = vim.tbl_keys(servers),
-				automatic_enable = false,
-				handlers = {
-					-- 默认 handler
-					function(server_name)
-						local opts = servers[server_name] or {}
-						opts.capabilities = capabilities
-						lspconfig[server_name].setup(opts)
-					end,
-				},
+				automatic_enable = vim.tbl_keys(servers),
 			})
 		end,
 	},
