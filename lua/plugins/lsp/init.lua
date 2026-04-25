@@ -79,7 +79,7 @@ return {
 					map("<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
 					map("<leader>ca", vim.lsp.buf.code_action, "Code Action")
 					map("<leader>lf", function()
-						require("conform").format({ bufnr = bufnr, lsp_fallback = true })
+						require("conform").format({ bufnr = bufnr, lsp_format = "fallback" })
 					end, "Format Buffer")
 					map("<leader>lr", "<cmd>LspRestart<cr>", "Restart LSP")
 

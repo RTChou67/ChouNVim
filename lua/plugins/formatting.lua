@@ -20,7 +20,7 @@ return {
         format_on_save = function(bufnr)
             return {
                 timeout_ms = 2000,
-                lsp_fallback = true,
+                lsp_format = "fallback",
             }
         end,
     },

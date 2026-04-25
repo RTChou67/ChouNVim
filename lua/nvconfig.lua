@@ -44,7 +44,7 @@ M.menu = {
 		{ name = "separator" },
 		{
 			name = "  Format",
-			cmd = "lua require('conform').format({ lsp_fallback = true })",
+			cmd = "lua require('conform').format({ lsp_format = 'fallback' })",
 		},
 		{ name = "separator" },
 		{
@@ -135,7 +135,7 @@ M.menu = {
 		{ name = "separator" },
 		{
 			name = "  Format",
-			cmd = "lua require('conform').format({ lsp_fallback = true })",
+			cmd = "lua require('conform').format({ lsp_format = 'fallback' })",
 		},
 		{ name = "separator" },
 		{
